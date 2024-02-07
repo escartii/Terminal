@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal</title>
+  <style>
+    body {
+      background-color: #2d2d2d;
+      color: #ffffff;
+      font-family: 'Menlo', monospace;
+      margin: 0;
+      padding: 0;
+    }
+
+    .terminal {
+      position: relative;
+      width: 80%;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 5px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    .buttons {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .button {
+      position: relative;
+      width: 12px; /* Ajustar el tamaño del botón */
+      height: 12px; /* Ajustar el tamaño del botón */
+      border-radius: 50%;
+      margin-right: 5px; /* Ajustar el margen entre botones */
+      cursor: pointer;
+      background-color: #ff0000; /* Color rojo */
+    }
+
+    .button.red::before,
+    .button.red::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 7px;
+      background-color: #313131; /* Color negro */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .button.red::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .button.green {
+      background-color: #00ff00; /* Color verde */
+    }
+
+    .button.yellow {
+      background-color: #ffff00; /* Color amarillo */
+    }
+
+    .output {
+      height: 300px;
+      overflow-y: auto;
+      border-bottom: 1px solid #333;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+    }
+
+    .input {
+      width: calc(100% - 20px);
+      border: none;
+      background: none;
+      outline: none;
+      color: #ffffff;
+      font-family: 'Menlo', monospace;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 3px;
+      background-color: #333;
+    }
+
+    .input:focus {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <div class="buttons">
+      <div class="button red" onclick="closeTerminal()"></div>
+      <div class="button yellow" onclick="minimizeTerminal()"></div>
+      <div class="button green" onclick="maximizeTerminal()"></div>
+    </div>
+    <div class="output" id="output"></div>
+    <input type="text" id="input" autofocus>
+  </div>
+  <script>
+   
+   const outputDiv = document.getElementById('output');
+        const inputField = document.getElementById('input');
+
+        inputField.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                const command = inputField.value;
+                executeCommand(command);
+                inputField.value = '';
+            }
+        });
+
+        function executeCommand(command) {
+            const output = document.createElement('p');
+            output.textContent = '> ' + command;
+            outputDiv.appendChild(output);
+
+            if (command.trim() === 'clear') {
+                clearOutput();
+                return;
+            }
+
+            // Implement command execution logic here
+            // For demonstration purposes, just echo the command
+            const result = document.createElement('p');
+            result.textContent = executeInShell(command);
+            outputDiv.appendChild(result);
+        }
+
+        function executeInShell(command) {
+            scrollToBottom();
+            // You would typically call some backend service here to execute the command
+            // For demonstration purposes, we'll just echo the command
+
+            if (command.trim() === 'javier') {
+                return command + ' es un crack';
+            }
+            // funcion que ejecuta un comando y devuelve un resultado
+            if (command.trim() === 'lucia') {
+                return command + ' es mongola';
+            }
+        }
+        
+
+        function clearOutput() {
+            outputDiv.innerHTML = ''; // Elimina todo el contenido dentro del elemento outputDiv
+        }
+
+        function scrollToBottom() {
+            var element = document.getElementById("output");
+            element.scrollTop = element.scrollHeight;
+
+        }
+    </script>
+  </script>
+</body>
+</html>
